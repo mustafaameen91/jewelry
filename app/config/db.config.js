@@ -1,8 +1,8 @@
-//online mysql password fFF@U#;RUc%h?m5Q
+//online mysql password >7}a_TPjKzE}gsM}
 module.exports = {
    HOST: "localhost",
    USER: "root",
-   PASSWORD: "",
+   PASSWORD: ">7}a_TPjKzE}gsM}",
    DB: "Jewelry",
    PORT: 3306,
 };
