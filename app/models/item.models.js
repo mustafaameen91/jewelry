@@ -1,5 +1,28 @@
 const sql = require("./db.js");
 
+function arrangeData(item, images) {
+   let itemImages = images.filter((image) => {
+      return image.itemId == item.idItem;
+   });
+
+   if (itemImages.length > 0) {
+      return {
+         idItem: item.idItem,
+         itemName: item.itemName,
+         itemDescription: item.itemDescription,
+         itemDate: item.itemDate,
+         itemQuality: item.itemQuality,
+         itemQuantity: item.itemQuantity,
+         itemLike: item.itemLike,
+         images: itemImages,
+      };
+   } else {
+      return {
+         item,
+         images: [],
+      };
+   }
+}
 const Item = function (item) {
    this.itemName = item.itemName;
    this.itemDescription = item.itemDescription;
@@ -42,14 +65,19 @@ Item.getAll = (result) => {
    sql.query(
       `SELECT idItem , itemName , itemDescription , DATE_FORMAT(itemDate, '%d/%m/%Y')AS itemDate , itemQuality , itemQuantity , itemLike FROM item   `,
       (err, res) => {
-         if (err) {
-            console.log("error: ", err);
-            result(null, err);
-            return;
-         }
+         sql.query(`SELECT * FROM image `, (err, resOne) => {
+            let imageItem = res.map((item) => {
+               return arrangeData(item, resOne);
+            });
+            if (err) {
+               console.log("error: ", err);
+               result(null, err);
+               return;
+            }
 
-         console.log("item: ", res);
-         result(null, res);
+            // console.log("item: ", res);
+            result(null, imageItem);
+         });
       }
    );
 };
