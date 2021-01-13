@@ -12,7 +12,6 @@ exports.create = (req, res) => {
       itemDescription: req.body.itemDescription,
       itemQuality: req.body.itemQuality,
       itemQuantity: req.body.itemQuantity,
-      itemLike: req.body.itemLike,
    });
 
    Item.create(item, (err, data) => {

@@ -36,6 +36,24 @@ Image.findById = (imageId, result) => {
    });
 };
 
+Image.findByImageByItemId = (itemId, result) => {
+   sql.query(`SELECT * FROM image WHERE itemId = ${itemId}`, (err, res) => {
+      if (err) {
+         console.log("error: ", err);
+         result(err, null);
+         return;
+      }
+
+      if (res.length) {
+         console.log("found Image: ", res);
+         result(null, res);
+         return;
+      }
+
+      result({ kind: "not_found" }, null);
+   });
+};
+
 Image.getAll = (result) => {
    sql.query(`SELECT * FROM image `, (err, res) => {
       if (err) {

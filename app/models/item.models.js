@@ -5,7 +5,6 @@ const Item = function (item) {
    this.itemDescription = item.itemDescription;
    this.itemQuality = item.itemQuality;
    this.itemQuantity = item.itemQuantity;
-   this.itemLike = item.itemLike;
 };
 
 Item.create = (newItem, result) => {
@@ -40,16 +39,19 @@ Item.findById = (itemId, result) => {
 };
 
 Item.getAll = (result) => {
-   sql.query(`SELECT * FROM item `, (err, res) => {
-      if (err) {
-         console.log("error: ", err);
-         result(null, err);
-         return;
-      }
+   sql.query(
+      `SELECT idItem , itemName , itemDescription , DATE_FORMAT(itemDate, '%d/%m/%Y')AS itemDate , itemQuality , itemQuantity , itemLike FROM item   `,
+      (err, res) => {
+         if (err) {
+            console.log("error: ", err);
+            result(null, err);
+            return;
+         }
 
-      console.log("item: ", res);
-      result(null, res);
-   });
+         console.log("item: ", res);
+         result(null, res);
+      }
+   );
 };
 
 Item.updateById = (id, item, result) => {

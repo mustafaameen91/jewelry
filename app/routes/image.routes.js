@@ -7,6 +7,8 @@ module.exports = (app) => {
 
    app.get("/api/image/:imageId", image.findOne);
 
+   app.get("/api/itemImages/:itemId", image.findOneByItemId);
+
    app.put("/api/image/:id", image.update);
 
    app.delete("/api/image/:id", image.delete);
