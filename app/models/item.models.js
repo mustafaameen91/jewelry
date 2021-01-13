@@ -100,6 +100,28 @@ Item.updateById = (id, item, result) => {
    });
 };
 
+Item.updateLikeById = (id, itemLike, result) => {
+   sql.query(
+      "UPDATE item SET itemLike  =  ?   WHERE idItem = ?",
+      [itemLike, id],
+      (err, res) => {
+         if (err) {
+            console.log("error: ", err);
+            result(null, err);
+            return;
+         }
+
+         if (res.affectedRows == 0) {
+            result({ kind: "not_found" }, null);
+            return;
+         }
+
+         console.log("updated item: ", { id: id, ...itemLike });
+         result(null, { id: id, ...itemLike });
+      }
+   );
+};
+
 Item.remove = (id, result) => {
    sql.query("DELETE FROM item WHERE idItem = ?", id, (err, res) => {
       if (err) {
