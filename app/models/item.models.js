@@ -61,9 +61,9 @@ Item.findById = (itemId, result) => {
    });
 };
 
-Item.getAll = (result) => {
+Item.getAll = (show, result) => {
    sql.query(
-      `SELECT idItem , itemName , itemDescription , DATE_FORMAT(itemDate, '%d/%m/%Y')AS itemDate , itemQuality , itemQuantity , itemLike FROM item   `,
+      `SELECT idItem , itemName , itemDescription , DATE_FORMAT(itemDate, '%d/%m/%Y')AS itemDate , itemQuality , itemQuantity , itemLike FROM item ${show}`,
       (err, res) => {
          sql.query(`SELECT * FROM image `, (err, resOne) => {
             let imageItem = res.map((item) => {

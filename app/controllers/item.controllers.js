@@ -25,7 +25,18 @@ exports.create = (req, res) => {
 };
 
 exports.findAll = (req, res) => {
-   Item.getAll((err, data) => {
+   let query = "";
+   if (req.query.show) {
+      if (req.query.show == "recently") {
+         query = `ORDER BY itemDate DESC LIMIT 10`;
+      } else if (req.query.show == "most") {
+         query = `ORDER BY itemLike DESC LIMIT 10`;
+      }
+   } else {
+      query = "";
+   }
+
+   Item.getAll(query, (err, data) => {
       if (err)
          res.status(500).send({
             message:
