@@ -18,7 +18,13 @@ function arrangeData(item, images) {
       };
    } else {
       return {
-         item,
+         idItem: item.idItem,
+         itemName: item.itemName,
+         itemDescription: item.itemDescription,
+         itemDate: item.itemDate,
+         itemQuality: item.itemQuality,
+         itemQuantity: item.itemQuantity,
+         itemLike: item.itemLike,
          images: [],
       };
    }
