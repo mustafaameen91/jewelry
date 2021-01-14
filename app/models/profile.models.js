@@ -25,21 +25,24 @@ Profile.create = (newProfile, result) => {
 };
 
 Profile.findById = (profileId, result) => {
-   sql.query(`SELECT * FROM profile WHERE id = ${profileId}`, (err, res) => {
-      if (err) {
-         console.log("error: ", err);
-         result(err, null);
-         return;
-      }
+   sql.query(
+      `SELECT * FROM profile WHERE idProfile = ${profileId}`,
+      (err, res) => {
+         if (err) {
+            console.log("error: ", err);
+            result(err, null);
+            return;
+         }
 
-      if (res.length) {
-         console.log("found profile: ", res[0]);
-         result(null, res[0]);
-         return;
-      }
+         if (res.length) {
+            console.log("found profile: ", res[0]);
+            result(null, res[0]);
+            return;
+         }
 
-      result({ kind: "not_found" }, null);
-   });
+         result({ kind: "not_found" }, null);
+      }
+   );
 };
 
 Profile.getAll = (result) => {
