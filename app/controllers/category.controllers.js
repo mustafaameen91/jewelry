@@ -40,6 +40,7 @@ exports.create = (req, res) => {
                   categoryImage:
                      "http://dashboard.hayderalkhafaje.com/images/" +
                      `${imageName}.${ext}`,
+                  categoryNameEn: req.body.categoryNameEn,
                });
 
                Category.create(category, (err, data) => {

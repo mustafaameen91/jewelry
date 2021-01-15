@@ -16,6 +16,8 @@ exports.create = (req, res) => {
       snapchat: req.body.snapchat,
       instagram: req.body.instagram,
       facebook: req.body.facebook,
+      profileNameEn: req.body.profileNameEn,
+      aboutUsEn: req.body.aboutUsEn,
    });
 
    Profile.create(profile, (err, data) => {

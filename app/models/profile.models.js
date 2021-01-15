@@ -9,6 +9,8 @@ const Profile = function (profile) {
    this.snapchat = profile.snapchat;
    this.instagram = profile.instagram;
    this.facebook = profile.facebook;
+   this.profileNameEn = profile.profileNameEn;
+   this.aboutUsEn = profile.aboutUsEn;
 };
 
 Profile.create = (newProfile, result) => {

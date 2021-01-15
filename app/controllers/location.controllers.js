@@ -43,6 +43,7 @@ exports.create = (req, res) => {
                      "http://dashboard.hayderalkhafaje.com/images/" +
                      `${imageName}.${ext}`,
                   note: req.body.note,
+                  noteEn: req.body.noteEn,
                });
 
                Location.create(location, (err, data) => {

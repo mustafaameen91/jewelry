@@ -3,6 +3,7 @@ const sql = require("./db.js");
 const Category = function (category) {
    this.categoryName = category.categoryName;
    this.categoryImage = category.categoryImage;
+   this.categoryNameEn = category.categoryNameEn;
 };
 
 Category.create = (newCategory, result) => {

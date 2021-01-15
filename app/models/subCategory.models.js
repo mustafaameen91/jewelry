@@ -4,6 +4,7 @@ const SubCategory = function (subCategory) {
    this.categoryId = subCategory.categoryId;
    this.subName = subCategory.subName;
    this.subImage = subCategory.subImage;
+   this.subNameEn = subCategory.subNameEn;
 };
 
 SubCategory.create = (newSubCategory, result) => {

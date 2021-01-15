@@ -42,6 +42,7 @@ exports.create = (req, res) => {
                   subImage:
                      "http://dashboard.hayderalkhafaje.com/images/" +
                      `${imageName}.${ext}`,
+                  subNameEn: req.body.subNameEn,
                });
                SubCategory.create(subCategory, (err, data) => {
                   if (err)

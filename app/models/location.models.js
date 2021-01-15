@@ -5,6 +5,7 @@ const Location = function (location) {
    this.lat = location.lat;
    this.storeImage = location.storeImage;
    this.note = location.note;
+   this.noteEn = location.noteEn;
 };
 
 Location.create = (newLocation, result) => {

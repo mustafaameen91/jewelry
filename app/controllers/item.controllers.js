@@ -12,6 +12,8 @@ exports.create = (req, res) => {
       itemDescription: req.body.itemDescription,
       itemQuality: req.body.itemQuality,
       itemQuantity: req.body.itemQuantity,
+      itemNameEn: req.body.itemNameEn,
+      itemDescriptionEn: req.body.itemDescriptionEn,
    });
 
    Item.create(item, (err, data) => {

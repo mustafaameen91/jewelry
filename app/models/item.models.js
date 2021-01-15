@@ -14,6 +14,8 @@ function arrangeData(item, images) {
          itemQuality: item.itemQuality,
          itemQuantity: item.itemQuantity,
          itemLike: item.itemLike,
+         itemNameEn: item.itemNameEn,
+         itemDescriptionEn: item.itemDescriptionEn,
          images: itemImages,
       };
    } else {
@@ -25,6 +27,8 @@ function arrangeData(item, images) {
          itemQuality: item.itemQuality,
          itemQuantity: item.itemQuantity,
          itemLike: item.itemLike,
+         itemNameEn: item.itemNameEn,
+         itemDescriptionEn: item.itemDescriptionEn,
          images: [],
       };
    }
@@ -34,6 +38,8 @@ const Item = function (item) {
    this.itemDescription = item.itemDescription;
    this.itemQuality = item.itemQuality;
    this.itemQuantity = item.itemQuantity;
+   this.itemNameEn = item.itemNameEn;
+   this.itemDescriptionEn = item.itemDescriptionEn;
 };
 
 Item.create = (newItem, result) => {
