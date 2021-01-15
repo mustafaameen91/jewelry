@@ -64,6 +64,22 @@ exports.findOne = (req, res) => {
    });
 };
 
+exports.findOneBySub = (req, res) => {
+   Item.findBySubId(req.params.subId, (err, data) => {
+      if (err) {
+         if (err.kind === "not_found") {
+            res.status(404).send({
+               message: `Not found item with id ${req.params.subId}.`,
+            });
+         } else {
+            res.status(500).send({
+               message: "Error retrieving item with id " + req.params.subId,
+            });
+         }
+      } else res.send(data);
+   });
+};
+
 exports.update = (req, res) => {
    if (!req.body) {
       res.status(400).send({

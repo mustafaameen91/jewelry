@@ -73,6 +73,24 @@ Item.findById = (itemId, result) => {
    });
 };
 
+Item.findBySubId = (subId, result) => {
+   sql.query(`SELECT * FROM item WHERE subId = ${subId}`, (err, res) => {
+      if (err) {
+         console.log("error: ", err);
+         result(err, null);
+         return;
+      }
+
+      if (res.length) {
+         console.log("found item: ", res);
+         result(null, res);
+         return;
+      }
+
+      result({ kind: "not_found" }, null);
+   });
+};
+
 Item.getAll = (show, result) => {
    sql.query(
       `SELECT idItem , itemName , itemDescription , DATE_FORMAT(itemDate, '%d/%m/%Y')AS itemDate , itemQuality , itemQuantity , itemLike FROM item ${show}`,

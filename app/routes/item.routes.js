@@ -7,6 +7,8 @@ module.exports = (app) => {
 
    app.get("/api/item/:itemId", item.findOne);
 
+   app.get("/api/item/:subId", item.findOneBySub);
+
    app.put("/api/item/:id", item.update);
 
    app.put("/api/itemLike/:id", item.updateLike);
