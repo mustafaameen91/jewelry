@@ -55,8 +55,8 @@ SubCategory.findByCategoryId = (categoryId, result) => {
          }
 
          if (res.length) {
-            console.log("found subCategory: ", res[0]);
-            result(null, res[0]);
+            console.log("found subCategory: ", res);
+            result(null, res);
             return;
          }
 
