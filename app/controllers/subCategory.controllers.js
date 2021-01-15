@@ -89,6 +89,24 @@ exports.findOne = (req, res) => {
    });
 };
 
+exports.findOneByCategoryId = (req, res) => {
+   SubCategory.findByCategoryId(req.params.categoryId, (err, data) => {
+      if (err) {
+         if (err.kind === "not_found") {
+            res.status(404).send({
+               message: `Not found subCategory with id ${req.params.categoryId}.`,
+            });
+         } else {
+            res.status(500).send({
+               message:
+                  "Error retrieving subCategory with id " +
+                  req.params.categoryId,
+            });
+         }
+      } else res.send(data);
+   });
+};
+
 exports.update = (req, res) => {
    if (!req.body) {
       res.status(400).send({
