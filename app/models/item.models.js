@@ -18,6 +18,8 @@ function arrangeData(item, images) {
          itemDescriptionEn: item.itemDescriptionEn,
          subName: item.subName,
          categoryName: item.categoryName,
+         subName: item.subNameEn,
+         categoryName: item.categoryNameEn,
          images: itemImages,
       };
    } else {
@@ -33,6 +35,8 @@ function arrangeData(item, images) {
          itemDescriptionEn: item.itemDescriptionEn,
          subName: item.subName,
          categoryName: item.categoryName,
+         subName: item.subNameEn,
+         categoryName: item.categoryNameEn,
          images: [],
       };
    }
@@ -97,7 +101,7 @@ Item.findBySubId = (subId, result) => {
 
 Item.getAll = (show, result) => {
    sql.query(
-      `SELECT item.idItem , item.itemName , item.itemDescription , DATE_FORMAT(item.itemDate, '%d/%m/%Y')AS itemDate , item.itemQuality , item.itemQuantity , item.itemLike , subCategory.subName , category.categoryName  FROM item JOIN subCategory JOIN itemCategory JOIN category ON itemCategory.itemId = item.idItem AND itemCategory.subId = subCategory.idSub AND subCategory.categoryId = category.idCategory ${show}`,
+      `SELECT item.idItem , item.itemName , item.itemDescription , DATE_FORMAT(item.itemDate, '%d/%m/%Y')AS itemDate , item.itemQuality , item.itemQuantity , item.itemLike , subCategory.subName , category.categoryName  , category.categoryNameEn ,subCategory.subNameEn   FROM item JOIN subCategory JOIN itemCategory JOIN category ON itemCategory.itemId = item.idItem AND itemCategory.subId = subCategory.idSub AND subCategory.categoryId = category.idCategory ${show}`,
       (err, res) => {
          sql.query(`SELECT * FROM image `, (err, resOne) => {
             let imageItem = res.map((item) => {
