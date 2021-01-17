@@ -7,6 +7,8 @@ module.exports = (app) => {
 
    app.get("/api/subCategory/:subCategoryId", subCategory.findOne);
 
+   app.get("/api/subCategoryId/:categoryId", subCategory.findOneByCategoryId);
+
    app.put("/api/subCategory/:id", subCategory.update);
 
    app.delete("/api/subCategory/:id", subCategory.delete);
