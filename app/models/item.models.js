@@ -82,21 +82,24 @@ Item.findById = (itemId, result) => {
 };
 
 Item.findBySubId = (subId, result) => {
-   sql.query(`SELECT * FROM item WHERE subId = ${subId}`, (err, res) => {
-      if (err) {
-         console.log("error: ", err);
-         result(err, null);
-         return;
-      }
+   sql.query(
+      `SELECT * FROM item JOIN itemCategory ON item.idItem = itemCategory.itemId WHERE itemCategory.subId = ${subId}`,
+      (err, res) => {
+         if (err) {
+            console.log("error: ", err);
+            result(err, null);
+            return;
+         }
 
-      if (res.length) {
-         console.log("found item: ", res);
-         result(null, res);
-         return;
-      }
+         if (res.length) {
+            console.log("found item: ", res);
+            result(null, res);
+            return;
+         }
 
-      result({ kind: "not_found" }, null);
-   });
+         result({ kind: "not_found" }, null);
+      }
+   );
 };
 
 Item.getAll = (show, result) => {
