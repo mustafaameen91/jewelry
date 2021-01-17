@@ -83,21 +83,21 @@ Item.findById = (itemId, result) => {
 
 Item.findBySubId = (subId, result) => {
    sql.query(
-      `SELECT * FROM item JOIN itemCategory ON item.idItem = itemCategory.itemId WHERE itemCategory.subId = ${subId}`,
+      `SELECT item.idItem , item.itemName , item.itemDescription ,item.itemNameEn , item.itemDescriptionEn , DATE_FORMAT(item.itemDate, '%d/%m/%Y')AS itemDate , item.itemQuality , item.itemQuantity , item.itemLike , subCategory.subName , category.categoryName , category.categoryNameEn ,subCategory.subNameEn FROM item JOIN itemCategory JOIN subCategory JOIN category ON item.idItem = itemCategory.itemId AND category.idCategory = subCategory.categoryId WHERE itemCategory.subId = ${subId}`,
       (err, res) => {
-         if (err) {
-            console.log("error: ", err);
-            result(err, null);
-            return;
-         }
+         sql.query(`SELECT * FROM image `, (err, resOne) => {
+            let imageItem = res.map((item) => {
+               return arrangeData(item, resOne);
+            });
+            if (err) {
+               console.log("error: ", err);
+               result(null, err);
+               return;
+            }
 
-         if (res.length) {
-            console.log("found item: ", res);
-            result(null, res);
-            return;
-         }
-
-         result({ kind: "not_found" }, null);
+            // console.log("item: ", res);
+            result(null, imageItem);
+         });
       }
    );
 };
