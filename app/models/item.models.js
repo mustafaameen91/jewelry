@@ -18,8 +18,8 @@ function arrangeData(item, images) {
          itemDescriptionEn: item.itemDescriptionEn,
          subName: item.subName,
          categoryName: item.categoryName,
-         subName: item.subNameEn,
-         categoryName: item.categoryNameEn,
+         subNameEn: item.subNameEn,
+         categoryNameEn: item.categoryNameEn,
          images: itemImages,
       };
    } else {
@@ -35,8 +35,8 @@ function arrangeData(item, images) {
          itemDescriptionEn: item.itemDescriptionEn,
          subName: item.subName,
          categoryName: item.categoryName,
-         subName: item.subNameEn,
-         categoryName: item.categoryNameEn,
+         subNameEn: item.subNameEn,
+         categoryNameEn: item.categoryNameEn,
          images: [],
       };
    }
