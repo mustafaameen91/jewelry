@@ -7,7 +7,7 @@ module.exports = (app) => {
 
    app.get("/api/item/:itemId", item.findOne);
 
-   app.get("/api/item/:subId", item.findOneBySub);
+   app.get("/api/itemSub/:subId", item.findOneBySub);
 
    app.put("/api/item/:id", item.update);
 
