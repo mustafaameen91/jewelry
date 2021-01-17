@@ -66,16 +66,19 @@ SubCategory.findByCategoryId = (categoryId, result) => {
 };
 
 SubCategory.getAll = (result) => {
-   sql.query(`SELECT * FROM subCategory `, (err, res) => {
-      if (err) {
-         console.log("error: ", err);
-         result(null, err);
-         return;
-      }
+   sql.query(
+      `SELECT * FROM subCategory JOIN category WHERE category.idCategory = subCategory.categoryId `,
+      (err, res) => {
+         if (err) {
+            console.log("error: ", err);
+            result(null, err);
+            return;
+         }
 
-      console.log("subCategory: ", res);
-      result(null, res);
-   });
+         console.log("subCategory: ", res);
+         result(null, res);
+      }
+   );
 };
 
 SubCategory.updateById = (id, subCategory, result) => {

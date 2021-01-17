@@ -30,9 +30,9 @@ exports.findAll = (req, res) => {
    let query = "";
    if (req.query.show) {
       if (req.query.show == "recently") {
-         query = `ORDER BY itemDate DESC LIMIT 10`;
+         query = `ORDER BY item.itemDate DESC LIMIT 10`;
       } else if (req.query.show == "most") {
-         query = `ORDER BY itemLike DESC LIMIT 10`;
+         query = `ORDER BY item.itemLike DESC LIMIT 10`;
       }
    } else {
       query = "";

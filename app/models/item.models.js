@@ -93,7 +93,7 @@ Item.findBySubId = (subId, result) => {
 
 Item.getAll = (show, result) => {
    sql.query(
-      `SELECT idItem , itemName , itemDescription , DATE_FORMAT(itemDate, '%d/%m/%Y')AS itemDate , itemQuality , itemQuantity , itemLike FROM item ${show}`,
+      `SELECT item.idItem , item.itemName , item.itemDescription , DATE_FORMAT(item.itemDate, '%d/%m/%Y')AS itemDate , item.itemQuality , item.itemQuantity , item.itemLike , subCategory.subName , category.categoryName  FROM item JOIN subCategory JOIN itemCategory JOIN category ON itemCategory.itemId = item.idItem AND itemCategory.subId = subCategory.idSub AND subCategory.categoryId = category.idCategory ${show}`,
       (err, res) => {
          sql.query(`SELECT * FROM image `, (err, resOne) => {
             let imageItem = res.map((item) => {
