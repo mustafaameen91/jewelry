@@ -16,6 +16,8 @@ function arrangeData(item, images) {
          itemLike: item.itemLike,
          itemNameEn: item.itemNameEn,
          itemDescriptionEn: item.itemDescriptionEn,
+         subName: item.subName,
+         categoryName: item.categoryName,
          images: itemImages,
       };
    } else {
@@ -29,6 +31,8 @@ function arrangeData(item, images) {
          itemLike: item.itemLike,
          itemNameEn: item.itemNameEn,
          itemDescriptionEn: item.itemDescriptionEn,
+         subName: item.subName,
+         categoryName: item.categoryName,
          images: [],
       };
    }
