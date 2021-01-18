@@ -104,7 +104,7 @@ Item.findBySubId = (subId, result) => {
 
 Item.getAll = (show, result) => {
    sql.query(
-      `SELECT item.idItem , item.itemName , item.itemDescription ,item.itemNameEn , item.itemDescriptionEn , DATE_FORMAT(item.itemDate, '%d/%m/%Y')AS itemDate , item.itemQuality , item.itemQuantity , item.itemLike , subCategory.subName , category.categoryName  , category.categoryNameEn ,subCategory.subNameEn   FROM item JOIN subCategory JOIN itemCategory JOIN category ON itemCategory.itemId = item.idItem AND itemCategory.subId = subCategory.idSub AND subCategory.categoryId = category.idCategory ${show}`,
+      `SELECT item.idItem , item.itemName ,subCategory.idSub , item.itemDescription ,item.itemNameEn , item.itemDescriptionEn , DATE_FORMAT(item.itemDate, '%d/%m/%Y')AS itemDate , item.itemQuality , item.itemQuantity , item.itemLike , subCategory.subName , category.categoryName  , category.categoryNameEn ,subCategory.subNameEn   FROM item JOIN subCategory JOIN itemCategory JOIN category ON itemCategory.itemId = item.idItem AND itemCategory.subId = subCategory.idSub AND subCategory.categoryId = category.idCategory ${show}`,
       (err, res) => {
          sql.query(`SELECT * FROM image `, (err, resOne) => {
             let imageItem = res.map((item) => {
