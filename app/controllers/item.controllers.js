@@ -1,4 +1,5 @@
 const Item = require("../models/item.models.js");
+const ItemCategory = require("../models/itemCategory.models.js");
 
 exports.create = (req, res) => {
    if (!req.body) {
@@ -22,7 +23,18 @@ exports.create = (req, res) => {
             message:
                err.message || "Some error occurred while creating the item.",
          });
-      else res.send(data);
+      else {
+         let newItemCategory = { itemId: data.id, subId: req.body.subId };
+         ItemCategory.create(newItemCategory, (err, dataOne) => {
+            if (err)
+               res.status(500).send({
+                  message:
+                     err.message ||
+                     "Some error occurred while creating the itemCategory.",
+               });
+            else res.send(data);
+         });
+      }
    });
 };
 
