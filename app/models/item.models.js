@@ -145,8 +145,8 @@ Item.updateById = (id, item, result) => {
 
 Item.updateLikeById = (id, itemLike, result) => {
    sql.query(
-      "UPDATE item SET itemLike  =  ?   WHERE idItem = ?",
-      [itemLike, id],
+      "UPDATE item SET itemLike  = ? WHERE idItem = ?",
+      [itemLike + 1, id],
       (err, res) => {
          if (err) {
             console.log("error: ", err);
