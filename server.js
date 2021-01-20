@@ -46,6 +46,17 @@ app.get("/images/:file", function (request, response) {
    });
 });
 
+const staticFileMiddleware = express.static(__dirname + "/dist");
+app.use(staticFileMiddleware);
+app.use(
+   history({
+      disableDotRule: true,
+      verbose: true,
+   })
+);
+
+app.use(staticFileMiddleware);
+
 exports.directory = __dirname;
 
 app.listen(3110, () => {
