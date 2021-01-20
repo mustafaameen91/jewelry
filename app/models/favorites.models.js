@@ -7,7 +7,7 @@ function arrangeData(item, images) {
 
    if (itemImages.length > 0) {
       return {
-         idItem: item.idItem,
+         itemId: item.idItem,
          itemName: item.itemName,
          itemDescription: item.itemDescription,
          itemDate: item.itemDate,
@@ -22,11 +22,12 @@ function arrangeData(item, images) {
          categoryNameEn: item.categoryNameEn,
          idSub: item.idSub,
          macAddress: item.macAddress,
+         idFavorites: item.idFavorites,
          images: itemImages,
       };
    } else {
       return {
-         idItem: item.idItem,
+         itemId: item.idItem,
          itemName: item.itemName,
          itemDescription: item.itemDescription,
          itemDate: item.itemDate,
@@ -41,6 +42,7 @@ function arrangeData(item, images) {
          categoryNameEn: item.categoryNameEn,
          idSub: item.idSub,
          macAddress: item.macAddress,
+         idFavorites: item.idFavorites,
          images: [],
       };
    }
