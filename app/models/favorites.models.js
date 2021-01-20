@@ -1,5 +1,51 @@
 const sql = require("./db.js");
 
+function arrangeData(item, images) {
+   let itemImages = images.filter((image) => {
+      return image.itemId == item.idItem;
+   });
+
+   if (itemImages.length > 0) {
+      return {
+         idItem: item.idItem,
+         itemName: item.itemName,
+         itemDescription: item.itemDescription,
+         itemDate: item.itemDate,
+         itemQuality: item.itemQuality,
+         itemQuantity: item.itemQuantity,
+         itemLike: item.itemLike,
+         itemNameEn: item.itemNameEn,
+         itemDescriptionEn: item.itemDescriptionEn,
+         subName: item.subName,
+         categoryName: item.categoryName,
+         subNameEn: item.subNameEn,
+         categoryNameEn: item.categoryNameEn,
+         idSub: item.idSub,
+         macAddress: item.macAddress,
+         images: itemImages,
+      };
+   } else {
+      return {
+         idItem: item.idItem,
+         itemName: item.itemName,
+         itemDescription: item.itemDescription,
+         itemDate: item.itemDate,
+         itemQuality: item.itemQuality,
+         itemQuantity: item.itemQuantity,
+         itemLike: item.itemLike,
+         itemNameEn: item.itemNameEn,
+         itemDescriptionEn: item.itemDescriptionEn,
+         subName: item.subName,
+         categoryName: item.categoryName,
+         subNameEn: item.subNameEn,
+         categoryNameEn: item.categoryNameEn,
+         idSub: item.idSub,
+         macAddress: item.macAddress,
+         images: [],
+      };
+   }
+}
+
 const Favorites = function (favorites) {
    this.macAddress = favorites.macAddress;
    this.itemId = favorites.itemId;
@@ -41,21 +87,26 @@ Favorites.findById = (favoritesId, result) => {
 
 Favorites.findByMacAddress = (macAddress, result) => {
    sql.query(
-      `SELECT * FROM favorites WHERE macAddress = '${macAddress}'`,
+      `SELECT item.idItem , item.itemName ,subCategory.idSub , favorites.macAddress , item.itemDescription ,item.itemNameEn , item.itemDescriptionEn , DATE_FORMAT(item.itemDate, '%d/%m/%Y')AS itemDate , item.itemQuality , item.itemQuantity , item.itemLike , subCategory.subName , category.categoryName , category.categoryNameEn ,subCategory.subNameEn FROM favorites JOIN item JOIN subCategory JOIN itemCategory JOIN category ON favorites.itemId = item.idItem AND itemCategory.itemId = item.idItem AND itemCategory.subId = subCategory.idSub AND subCategory.categoryId = category.idCategory WHERE favorites.macAddress = '${macAddress}'`,
       (err, res) => {
-         if (err) {
-            console.log("error: ", err);
-            result(err, null);
-            return;
-         }
+         sql.query(`SELECT * FROM image `, (err, resOne) => {
+            let imageItem = res.map((item) => {
+               return arrangeData(item, resOne);
+            });
+            if (err) {
+               console.log("error: ", err);
+               result(err, null);
+               return;
+            }
 
-         if (res.length) {
-            console.log("found favorites: ", res);
-            result(null, res);
-            return;
-         }
+            if (res.length) {
+               console.log("found favorites: ", res);
+               result(null, imageItem);
+               return;
+            }
 
-         result({ kind: "not_found" }, null);
+            result({ kind: "not_found" }, null);
+         });
       }
    );
 };
