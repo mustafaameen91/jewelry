@@ -76,8 +76,8 @@ Admin.loginUser = (userName, password, result) => {
             result(null, err);
             return;
          }
-         console.log("admin: ", res);
-         result(null, res);
+         console.log("admin: ", res[0]);
+         result(null, res[0]);
       }
    );
 };
