@@ -69,7 +69,7 @@ Admin.updateById = (id, admin, result) => {
 
 Admin.loginUser = (userName, password, result) => {
    sql.query(
-      `SELECT * FROM admin WHERE userName = ${userName} AND password = ${password}`,
+      `SELECT * FROM admin WHERE userName = '${userName}' AND password = '${password}'`,
       (err, res) => {
          if (err) {
             console.log("error: ", err);
