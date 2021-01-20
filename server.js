@@ -23,6 +23,7 @@ require("./app/routes/location.routes.js")(app);
 require("./app/routes/profile.routes.js")(app);
 require("./app/routes/subCategory.routes.js")(app);
 require("./app/routes/visit.routes.js")(app);
+require("./app/routes/favorites.routes.js")(app);
 
 app.get("/images/:file", function (request, response) {
    let file = request.params.file;
