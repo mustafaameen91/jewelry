@@ -1,6 +1,6 @@
 const sql = require("./db.js");
 
-function arrangeData(item, images) {
+function arrangeData(item, images, found) {
    let itemImages = images.filter((image) => {
       return image.itemId == item.idItem;
    });
@@ -21,6 +21,7 @@ function arrangeData(item, images) {
          subNameEn: item.subNameEn,
          categoryNameEn: item.categoryNameEn,
          idSub: item.idSub,
+         foundFavorite: found,
          images: itemImages,
       };
    } else {
@@ -39,10 +40,25 @@ function arrangeData(item, images) {
          subNameEn: item.subNameEn,
          categoryNameEn: item.categoryNameEn,
          idSub: item.idSub,
+         foundFavorite: found,
          images: [],
       };
    }
 }
+
+function foundFavorite(itemId, macAddress, arrayOfFavorite) {
+   console.log(arrayOfFavorite);
+   let found = arrayOfFavorite.filter((fav) => {
+      return fav.itemId == itemId && fav.macAddress == macAddress;
+   });
+
+   if (found.length > 0) {
+      return true;
+   } else {
+      return false;
+   }
+}
+
 const Item = function (item) {
    this.itemName = item.itemName;
    this.itemDescription = item.itemDescription;
@@ -83,22 +99,28 @@ Item.findById = (itemId, result) => {
    });
 };
 
-Item.findBySubId = (subId, result) => {
+Item.findBySubId = (subId, macAddress, result) => {
    sql.query(
       `SELECT item.idItem , item.itemName , item.itemDescription ,item.itemNameEn , item.itemDescriptionEn , DATE_FORMAT(item.itemDate, '%d/%m/%Y')AS itemDate , item.itemQuality , item.itemQuantity , item.itemLike , subCategory.subName , category.categoryName , category.categoryNameEn ,subCategory.subNameEn FROM item JOIN itemCategory JOIN subCategory JOIN category ON item.idItem = itemCategory.itemId AND category.idCategory = subCategory.categoryId WHERE itemCategory.subId = ${subId}`,
       (err, res) => {
          sql.query(`SELECT * FROM image `, (err, resOne) => {
-            let imageItem = res.map((item) => {
-               return arrangeData(item, resOne);
-            });
-            if (err) {
-               console.log("error: ", err);
-               result(null, err);
-               return;
-            }
+            sql.query(`SELECT * FROM favorites`, (err, resFav) => {
+               let imageItem = res.map((item) => {
+                  return arrangeData(
+                     item,
+                     resOne,
+                     foundFavorite(item.idItem, macAddress, resFav)
+                  );
+               });
+               if (err) {
+                  console.log("error: ", err);
+                  result(null, err);
+                  return;
+               }
 
-            // console.log("item: ", res);
-            result(null, imageItem);
+               // console.log("item: ", res);
+               result(null, imageItem);
+            });
          });
       }
    );

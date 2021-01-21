@@ -77,7 +77,7 @@ exports.findOne = (req, res) => {
 };
 
 exports.findOneBySub = (req, res) => {
-   Item.findBySubId(req.params.subId, (err, data) => {
+   Item.findBySubId(req.query.subId, req.query.macAddress, (err, data) => {
       if (err) {
          if (err.kind === "not_found") {
             res.status(404).send({
