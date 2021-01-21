@@ -89,7 +89,7 @@ Favorites.findById = (favoritesId, result) => {
 
 Favorites.findByFoundFav = (macAddress, itemId, result) => {
    sql.query(
-      `SELECT * FROM favorites WHERE macAddress = ${macAddress} AND itemId = ${itemId}`,
+      `SELECT * FROM favorites WHERE macAddress = '${macAddress}' AND itemId = ${itemId}`,
       (err, res) => {
          if (err) {
             console.log("error: ", err);
