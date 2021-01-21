@@ -87,6 +87,26 @@ Favorites.findById = (favoritesId, result) => {
    );
 };
 
+Favorites.findByFoundFav = (macAddress, itemId, result) => {
+   sql.query(
+      `SELECT * FROM favorites WHERE macAddress = ${macAddress} AND itemId = ${itemId}`,
+      (err, res) => {
+         if (err) {
+            console.log("error: ", err);
+            result(err, null);
+            return;
+         }
+
+         if (res.length) {
+            console.log("found favorites: ", res[0]);
+            result(null, res[0]);
+            return;
+         }
+
+         result({ kind: "not_found" }, null);
+      }
+   );
+};
 Favorites.findByMacAddress = (macAddress, result) => {
    sql.query(
       `SELECT item.idItem , item.itemName ,favorites.idFavorites ,subCategory.idSub , favorites.macAddress , item.itemDescription ,item.itemNameEn , item.itemDescriptionEn , DATE_FORMAT(item.itemDate, '%d/%m/%Y')AS itemDate , item.itemQuality , item.itemQuantity , item.itemLike , subCategory.subName , category.categoryName , category.categoryNameEn ,subCategory.subNameEn FROM favorites JOIN item JOIN subCategory JOIN itemCategory JOIN category ON favorites.itemId = item.idItem AND itemCategory.itemId = item.idItem AND itemCategory.subId = subCategory.idSub AND subCategory.categoryId = category.idCategory WHERE favorites.macAddress = '${macAddress}'`,

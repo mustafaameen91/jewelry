@@ -9,6 +9,8 @@ module.exports = (app) => {
 
    app.get("/api/favoriteMac/:macAddress", favorites.findOneByMacAddress);
 
+   app.get("/api/favoriteFound", favorites.findOneByFound);
+
    app.put("/api/favorite/:id", favorites.update);
 
    app.delete("/api/favorite/:id", favorites.delete);

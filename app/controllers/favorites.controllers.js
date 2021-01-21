@@ -80,6 +80,28 @@ exports.findOneByMacAddress = (req, res) => {
    });
 };
 
+exports.findOneByFound = (req, res) => {
+   Favorites.findByFoundFav(
+      req.query.macAddress,
+      req.query.itemId,
+      (err, data) => {
+         if (err) {
+            if (err.kind === "not_found") {
+               res.send({
+                  found: false,
+               });
+            } else {
+               res.status(500).send({
+                  message:
+                     "Error retrieving Favorites with id " +
+                     req.params.macAddress,
+               });
+            }
+         } else res.send({ found: true });
+      }
+   );
+};
+
 exports.update = (req, res) => {
    if (!req.body) {
       res.status(400).send({
