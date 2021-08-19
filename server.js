@@ -38,6 +38,10 @@ app.get("/images/:file", function (request, response) {
             contentType = "image/jpg";
             isImage = 1;
             break;
+         case "jpeg":
+            contentType = "image/jpeg";
+            isImage = 1;
+            break;
          case "png":
             contentType = "image/png";
             isImage = 1;
