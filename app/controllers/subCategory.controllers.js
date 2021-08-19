@@ -40,7 +40,7 @@ exports.create = (req, res) => {
                   categoryId: req.body.categoryId,
                   subName: req.body.subName,
                   subImage:
-                     "http://dashboard.hayderalkhafaje.com/images/" +
+                     "http://hayder-alkhafaje.com/images/" +
                      `${imageName}.${ext}`,
                   subNameEn: req.body.subNameEn,
                });

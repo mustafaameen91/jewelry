@@ -38,7 +38,7 @@ exports.create = (req, res) => {
                const category = new Category({
                   categoryName: req.body.categoryName,
                   categoryImage:
-                     "http://dashboard.hayderalkhafaje.com/images/" +
+                     "http://hayder-alkhafaje.com/images/" +
                      `${imageName}.${ext}`,
                   categoryNameEn: req.body.categoryNameEn,
                });

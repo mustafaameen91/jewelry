@@ -40,7 +40,7 @@ exports.create = (req, res) => {
                   lang: req.body.lang,
                   lat: req.body.lat,
                   storeImage:
-                     "http://dashboard.hayderalkhafaje.com/images/" +
+                     "http://hayder-alkhafaje.com/images/" +
                      `${imageName}.${ext}`,
                   note: req.body.note,
                   noteEn: req.body.noteEn,

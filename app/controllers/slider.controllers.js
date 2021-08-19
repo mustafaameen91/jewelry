@@ -38,7 +38,7 @@ exports.create = (req, res) => {
             } else {
                const slider = new Slider({
                   sliderImage:
-                     "http://dashboard.hayderalkhafaje.com/images/" +
+                     "http://hayder-alkhafaje.com/images/" +
                      `${imageName}.${ext}`,
                });
 

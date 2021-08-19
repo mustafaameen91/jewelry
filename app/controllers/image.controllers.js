@@ -38,7 +38,7 @@ exports.create = (req, res) => {
             } else {
                const image = new Image({
                   imagePath:
-                     "http://dashboard.hayderalkhafaje.com/images/" +
+                     "http://hayder-alkhafaje.com/images/" +
                      `${imageName}.${ext}`,
                   itemId: req.body.itemId,
                });
