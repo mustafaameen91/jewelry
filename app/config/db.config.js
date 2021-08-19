@@ -4,6 +4,6 @@ module.exports = {
    // PASSWORD: ">7}a_TPjKzE}gsM}",
    USER: "haider",
    PASSWORD: "Hh123123!@",
-   DB: "Jewelry",
+   DB: "jewelry",
    PORT: 3306,
 };
