@@ -2,8 +2,8 @@ module.exports = {
    HOST: "localhost",
    // USER: "root",
    // PASSWORD: ">7}a_TPjKzE}gsM}",
-   USER: "russel",
-   PASSWORD: "superSecretPassword!123",
+   USER: "haider",
+   PASSWORD: "Hh123123!@",
    DB: "Jewelry",
    PORT: 3306,
 };
