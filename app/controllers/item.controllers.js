@@ -2,163 +2,164 @@ const Item = require("../models/item.models.js");
 const ItemCategory = require("../models/itemCategory.models.js");
 
 exports.create = (req, res) => {
-   if (!req.body) {
-      res.status(400).send({
-         message: "Content can not be empty!",
+  if (!req.body) {
+    res.status(400).send({
+      message: "Content can not be empty!",
+    });
+  }
+
+  const item = new Item({
+    itemName: req.body.itemName,
+    itemDescription: req.body.itemDescription,
+    itemQuality: req.body.itemQuality,
+    itemQuantity: req.body.itemQuantity,
+    itemNameEn: req.body.itemNameEn,
+    itemDescriptionEn: req.body.itemDescriptionEn,
+  });
+
+  Item.create(item, (err, data) => {
+    if (err)
+      res.status(500).send({
+        message:
+          err.message || "Some error occurred while creating the item.",
       });
-   }
-
-   const item = new Item({
-      itemName: req.body.itemName,
-      itemDescription: req.body.itemDescription,
-      itemQuality: req.body.itemQuality,
-      itemQuantity: req.body.itemQuantity,
-      itemNameEn: req.body.itemNameEn,
-      itemDescriptionEn: req.body.itemDescriptionEn,
-   });
-
-   Item.create(item, (err, data) => {
-      if (err)
-         res.status(500).send({
+    else {
+      let newItemCategory = {itemId: data.id, subId: req.body.subId};
+      ItemCategory.create(newItemCategory, (err, dataOne) => {
+        if (err)
+          res.status(500).send({
             message:
-               err.message || "Some error occurred while creating the item.",
-         });
-      else {
-         let newItemCategory = { itemId: data.id, subId: req.body.subId };
-         ItemCategory.create(newItemCategory, (err, dataOne) => {
-            if (err)
-               res.status(500).send({
-                  message:
-                     err.message ||
-                     "Some error occurred while creating the itemCategory.",
-               });
-            else res.send(data);
-         });
-      }
-   });
+              err.message ||
+              "Some error occurred while creating the itemCategory.",
+          });
+        else res.send(data);
+      });
+    }
+  });
 };
 
 exports.findAll = (req, res) => {
-   let query = "";
-   if (req.query.show) {
-      if (req.query.show == "recently") {
-         query = `ORDER BY item.itemDate DESC LIMIT 10`;
-      } else if (req.query.show == "most") {
-         query = `ORDER BY item.itemLike DESC LIMIT 10`;
-      }
-   } else {
-      query = "";
-   }
+  let query = "";
 
-   Item.getAll(query, (err, data) => {
-      if (err)
-         res.status(500).send({
-            message:
-               err.message || "Some error occurred while retrieving item.",
-         });
-      else res.send(data);
-   });
+  if (req.query.show) {
+    if (req.query.show == "recently") {
+      query = `ORDER BY item.itemDate DESC LIMIT 10`;
+    } else if (req.query.show == "most") {
+      query = `ORDER BY item.itemLike DESC LIMIT 10`;
+    }
+  } else {
+    query = "";
+  }
+
+  Item.getAll(query, req.query.macAddress, (err, data) => {
+    if (err)
+      res.status(500).send({
+        message:
+          err.message || "Some error occurred while retrieving item.",
+      });
+    else res.send(data);
+  });
 };
 
 exports.findOne = (req, res) => {
-   Item.findById(req.params.itemId, (err, data) => {
-      if (err) {
-         if (err.kind === "not_found") {
-            res.status(404).send({
-               message: `Not found item with id ${req.params.itemId}.`,
-            });
-         } else {
-            res.status(500).send({
-               message: "Error retrieving item with id " + req.params.itemId,
-            });
-         }
-      } else res.send(data);
-   });
+  Item.findById(req.params.itemId, (err, data) => {
+    if (err) {
+      if (err.kind === "not_found") {
+        res.status(404).send({
+          message: `Not found item with id ${req.params.itemId}.`,
+        });
+      } else {
+        res.status(500).send({
+          message: "Error retrieving item with id " + req.params.itemId,
+        });
+      }
+    } else res.send(data);
+  });
 };
 
 exports.findOneBySub = (req, res) => {
-   Item.findBySubId(req.query.subId, req.query.macAddress, (err, data) => {
-      if (err) {
-         if (err.kind === "not_found") {
-            res.status(404).send({
-               message: `Not found item with id ${req.params.subId}.`,
-            });
-         } else {
-            res.status(500).send({
-               message: "Error retrieving item with id " + req.params.subId,
-            });
-         }
-      } else res.send(data);
-   });
+  Item.findBySubId(req.query.subId, req.query.macAddress, (err, data) => {
+    if (err) {
+      if (err.kind === "not_found") {
+        res.status(404).send({
+          message: `Not found item with id ${req.params.subId}.`,
+        });
+      } else {
+        res.status(500).send({
+          message: "Error retrieving item with id " + req.params.subId,
+        });
+      }
+    } else res.send(data);
+  });
 };
 
 exports.update = (req, res) => {
-   if (!req.body) {
-      res.status(400).send({
-         message: "Content can not be empty!",
-      });
-   }
+  if (!req.body) {
+    res.status(400).send({
+      message: "Content can not be empty!",
+    });
+  }
 
-   Item.updateById(req.params.id, new Item(req.body), (err, data) => {
-      if (err) {
-         if (err.kind === "not_found") {
-            res.status(404).send({
-               message: `Not found item with id ${req.params.id}.`,
-            });
-         } else {
-            res.status(500).send({
-               message: "Error updating item with id " + req.params.id,
-            });
-         }
-      } else res.send(data);
-   });
+  Item.updateById(req.params.id, new Item(req.body), (err, data) => {
+    if (err) {
+      if (err.kind === "not_found") {
+        res.status(404).send({
+          message: `Not found item with id ${req.params.id}.`,
+        });
+      } else {
+        res.status(500).send({
+          message: "Error updating item with id " + req.params.id,
+        });
+      }
+    } else res.send(data);
+  });
 };
 
 exports.updateLike = (req, res) => {
-   if (!req.body) {
-      res.status(400).send({
-         message: "Content can not be empty!",
-      });
-   }
+  if (!req.body) {
+    res.status(400).send({
+      message: "Content can not be empty!",
+    });
+  }
 
-   Item.updateLikeById(req.params.id, req.body.itemLike, (err, data) => {
-      if (err) {
-         if (err.kind === "not_found") {
-            res.status(404).send({
-               message: `Not found item with id ${req.params.id}.`,
-            });
-         } else {
-            res.status(500).send({
-               message: "Error updating item with id " + req.params.id,
-            });
-         }
-      } else res.send(data);
-   });
+  Item.updateLikeById(req.params.id, req.body.itemLike, (err, data) => {
+    if (err) {
+      if (err.kind === "not_found") {
+        res.status(404).send({
+          message: `Not found item with id ${req.params.id}.`,
+        });
+      } else {
+        res.status(500).send({
+          message: "Error updating item with id " + req.params.id,
+        });
+      }
+    } else res.send(data);
+  });
 };
 
 exports.delete = (req, res) => {
-   Item.remove(req.params.id, (err, data) => {
-      if (err) {
-         if (err.kind === "not_found") {
-            res.status(404).send({
-               message: `Not found item with id ${req.params.id}.`,
-            });
-         } else {
-            res.status(500).send({
-               message: "Could not delete item with id " + req.params.id,
-            });
-         }
-      } else res.send({ message: `item was deleted successfully!` });
-   });
+  Item.remove(req.params.id, (err, data) => {
+    if (err) {
+      if (err.kind === "not_found") {
+        res.status(404).send({
+          message: `Not found item with id ${req.params.id}.`,
+        });
+      } else {
+        res.status(500).send({
+          message: "Could not delete item with id " + req.params.id,
+        });
+      }
+    } else res.send({message: `item was deleted successfully!`});
+  });
 };
 
 exports.deleteAll = (req, res) => {
-   Item.removeAll((err, data) => {
-      if (err)
-         res.status(500).send({
-            message:
-               err.message || "Some error occurred while removing all item.",
-         });
-      else res.send({ message: `All item were deleted successfully!` });
-   });
+  Item.removeAll((err, data) => {
+    if (err)
+      res.status(500).send({
+        message:
+          err.message || "Some error occurred while removing all item.",
+      });
+    else res.send({message: `All item were deleted successfully!`});
+  });
 };
