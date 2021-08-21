@@ -5,6 +5,8 @@ module.exports = (app) => {
 
    app.get("/api/categories", category.findAll);
 
+   app.get("/api/specialCategories", category.findSpecialCategory);
+
    app.get("/api/category/:categoryId", category.findOne);
 
    app.put("/api/category/:id", category.update);

@@ -69,6 +69,17 @@ exports.findAll = (req, res) => {
    });
 };
 
+exports.findSpecialCategory = (req, res) => {
+   Category.getSpecialCategory((err, data) => {
+      if (err)
+         res.status(500).send({
+            message:
+               err.message || "Some error occurred while retrieving Category.",
+         });
+      else res.send(data);
+   });
+};
+
 exports.findOne = (req, res) => {
    Category.findById(req.params.categoryId, (err, data) => {
       if (err) {
