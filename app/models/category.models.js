@@ -52,7 +52,7 @@ Category.getAll = (result) => {
 
 Category.getSpecialCategory = (result) => {
    sql.query(
-      `SELECT * FROM category WHERE idCategory = 7 OR idCategory = 6`,
+      `SELECT * FROM category WHERE idCategory = 7 OR idCategory = 6 OR idCategory = 8`,
       (err, res) => {
          if (err) {
             console.log("error: ", err);
