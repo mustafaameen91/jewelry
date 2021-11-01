@@ -1,7 +1,8 @@
 module.exports = (app) => {
    const slider = require("../controllers/slider.controllers.js");
+   const resize = require("../middleware/saveImage.middleware.js");
 
-   app.post("/api/addSlider", slider.create);
+   app.post("/api/addSlider", resize.resize, slider.create);
 
    app.get("/api/sliders", slider.findAll);
 

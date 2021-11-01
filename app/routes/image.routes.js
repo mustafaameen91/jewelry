@@ -1,7 +1,8 @@
 module.exports = (app) => {
    const image = require("../controllers/image.controllers.js");
+   const resize = require("../middleware/saveImage.middleware.js");
 
-   app.post("/api/addImage", image.create);
+   app.post("/api/addImage", resize.resize, image.create);
 
    app.get("/api/images", image.findAll);
 

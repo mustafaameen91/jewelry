@@ -3,7 +3,7 @@ module.exports = {
    // USER: "root",
    // PASSWORD: ">7}a_TPjKzE}gsM}",
    USER: "root",
-   PASSWORD: "Hh123123!@",
+   PASSWORD: "root",
    DB: "Jewelry",
-   PORT: 3306,
+   PORT: 8889,
 };

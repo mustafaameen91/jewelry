@@ -1,7 +1,8 @@
 module.exports = (app) => {
    const category = require("../controllers/category.controllers.js");
+   const resize = require("../middleware/saveImage.middleware.js");
 
-   app.post("/api/addCategory", category.create);
+   app.post("/api/addCategory", resize.resize, category.create);
 
    app.get("/api/categories", category.findAll);
 

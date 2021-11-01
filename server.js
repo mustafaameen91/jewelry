@@ -7,12 +7,7 @@ const app = express();
 
 app.use(cors());
 app.use(express.json({ limit: "50mb" }));
-app.use(
-   upload({
-      useTempFiles: true,
-      tempFileDir: "/tmp/",
-   })
-);
+app.use(upload());
 
 require("./app/routes/category.routes.js")(app);
 require("./app/routes/slider.routes.js")(app);

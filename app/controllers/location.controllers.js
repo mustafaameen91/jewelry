@@ -1,20 +1,5 @@
 const Location = require("../models/location.models.js");
 
-const directory = require("./../../server");
-
-function generateRandomName(length, studentId) {
-   var result = "";
-   var characters =
-      "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
-   var charactersLength = characters.length;
-   for (var i = 0; i < length; i++) {
-      result +=
-         characters.charAt(Math.floor(Math.random() * charactersLength)) +
-         studentId;
-   }
-   return result;
-}
-
 exports.create = (req, res) => {
    if (!req.body) {
       res.status(400).send({
@@ -22,43 +7,23 @@ exports.create = (req, res) => {
       });
    }
 
-   if (req.files) {
-      let imageName = generateRandomName(5, 3);
-      var file = req.files.file;
-      var filename = file.name;
-      console.log(filename);
-      var ext = filename.substr(filename.lastIndexOf(".") + 1);
+   const location = new Location({
+      lang: req.body.lang,
+      lat: req.body.lat,
+      storeImage: "http://hayder-alkhafaje.com/images/" + req.filePath,
+      note: req.body.note,
+      noteEn: req.body.noteEn,
+   });
 
-      file.mv(
-         directory.directory + "/app/images/" + `${imageName}.${ext}`,
-         function (err) {
-            if (err) {
-               console.log(err);
-               res.status(401).send("unable to upload file");
-            } else {
-               const location = new Location({
-                  lang: req.body.lang,
-                  lat: req.body.lat,
-                  storeImage:
-                     "http://hayder-alkhafaje.com/images/" +
-                     `${imageName}.${ext}`,
-                  note: req.body.note,
-                  noteEn: req.body.noteEn,
-               });
-
-               Location.create(location, (err, data) => {
-                  if (err)
-                     res.status(500).send({
-                        message:
-                           err.message ||
-                           "Some error occurred while creating the location.",
-                     });
-                  else res.send(data);
-               });
-            }
-         }
-      );
-   }
+   Location.create(location, (err, data) => {
+      if (err)
+         res.status(500).send({
+            message:
+               err.message ||
+               "Some error occurred while creating the location.",
+         });
+      else res.send(data);
+   });
 };
 
 exports.findAll = (req, res) => {

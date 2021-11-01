@@ -1,7 +1,8 @@
 module.exports = (app) => {
    const location = require("../controllers/location.controllers.js");
+   const resize = require("../middleware/saveImage.middleware.js");
 
-   app.post("/api/addLocation", location.create);
+   app.post("/api/addLocation", resize.resize, location.create);
 
    app.get("/api/locations", location.findAll);
 
