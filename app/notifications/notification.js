@@ -1,7 +1,7 @@
 var sendNotification = function (data) {
    var headers = {
       "Content-Type": "application/json; charset=utf-8",
-      Authorization: "Basic NWZlZDA2OTAtMTQyMy00ZTFmLTkyYTctZDE4YzhmY2VmMTZl",
+      Authorization: "Basic MGZlYzc1ODctYzI2YS00N2ViLWE3ZDUtODE0ZDZiMTZiZDAy",
    };
 
    var options = {

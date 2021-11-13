@@ -24,9 +24,8 @@ exports.resize = (req, res, next) => {
 
       sharp(req.files.file.data)
          .resize({ height: 640, width: 513 })
-         .toBuffer()
+         .toFile(`./app/images/${imageName}`)
          .then(function (newFileInfo) {
-            fs.writeFileSync(imageName, newFileInfo);
             req.filePath = imageName;
             next();
          })

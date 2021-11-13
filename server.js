@@ -4,7 +4,7 @@ const history = require("connect-history-api-fallback");
 const upload = require("express-fileupload");
 const fs = require("fs");
 const app = express();
-
+const notification = require("./app/notifications/notification");
 app.use(cors());
 app.use(express.json({ limit: "50mb" }));
 app.use(upload());
@@ -45,6 +45,20 @@ app.get("/images/:file", function (request, response) {
       response.contentType(contentType);
       response.send(data);
    });
+});
+
+app.post("/api/sendNotification", (req, res) => {
+   var message = {
+      app_id: "ef559c74-26d7-42cd-82ba-fed33f4cfe94",
+      headings: { en: `${req.body.title}` },
+      contents: {
+         en: `${req.body.content}`,
+      },
+      included_segments: ["Subscribed Users"],
+   };
+
+   notification(message);
+   res.send({ text: "message send" });
 });
 
 const staticFileMiddleware = express.static(__dirname + "/dist");

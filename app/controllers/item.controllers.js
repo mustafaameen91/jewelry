@@ -1,5 +1,6 @@
 const Item = require("../models/item.models.js");
 const ItemCategory = require("../models/itemCategory.models.js");
+const notification = require("./../notifications/notification");
 
 exports.create = (req, res) => {
    if (!req.body) {
@@ -33,7 +34,22 @@ exports.create = (req, res) => {
                      err.message ||
                      "Some error occurred while creating the itemCategory.",
                });
-            else res.send(data);
+            else {
+               var message = {
+                  app_id: "ef559c74-26d7-42cd-82ba-fed33f4cfe94",
+                  headings: { en: `تم اضافة منتج جديد` },
+                  contents: {
+                     en: `${data.itemDescription}`,
+                  },
+                  subtitle: {
+                     en: `${data.itemName}`,
+                  },
+                  included_segments: ["Subscribed Users"],
+               };
+
+               notification(message);
+               res.send(data);
+            }
          });
       }
    });

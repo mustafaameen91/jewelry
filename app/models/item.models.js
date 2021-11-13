@@ -14,6 +14,7 @@ function arrangeData(item, images, found) {
          itemQuality: item.itemQuality,
          itemQuantity: item.itemQuantity,
          itemLike: item.itemLike,
+         special: item.special,
          itemNameEn: item.itemNameEn,
          itemDescriptionEn: item.itemDescriptionEn,
          subName: item.subName,
@@ -35,6 +36,7 @@ function arrangeData(item, images, found) {
          itemQuality: item.itemQuality,
          itemQuantity: item.itemQuantity,
          itemLike: item.itemLike,
+         special: item.special,
          itemNameEn: item.itemNameEn,
          itemDescriptionEn: item.itemDescriptionEn,
          subName: item.subName,
@@ -99,6 +101,7 @@ Item.findBySpecial = (show, mac, result) => {
       item.itemQuality,
       item.itemQuantity,
       item.itemLike,
+      item.special,
       subCategory.subName,
       category.categoryName,
       category.categoryNameEn,
@@ -166,7 +169,7 @@ Item.findBySubId = (subId, mac, result) => {
    sql.query(
       `SELECT item.idItem , item.itemName , item.itemDescription ,item.itemNameEn ,
     item.itemDescriptionEn , DATE_FORMAT(item.itemDate, '%d/%m/%Y')AS itemDate ,
-    item.itemQuality , item.itemQuantity , item.itemLike , subCategory.subName , 
+    item.itemQuality , item.itemQuantity , item.itemLike ,item.special, subCategory.subName , 
     category.categoryName , category.categoryNameEn ,subCategory.subNameEn,
       count(f.idFavorites) as favoritesCount
       ${mac ? ", IFNULL(NOT NOT(fs.itemId), FALSE) AS isFavorite" : ""}
@@ -222,6 +225,7 @@ Item.getAll = (show, mac, special, result) => {
       item.itemQuality,
       item.itemQuantity,
       item.itemLike,
+      item.special,
       subCategory.subName,
       category.categoryName,
       category.categoryNameEn,
@@ -268,7 +272,7 @@ Item.getAll = (show, mac, special, result) => {
 };
 
 Item.updateById = (id, item, result) => {
-   sql.query("UPDATE item SET ? WHERE id = ?", [item, id], (err, res) => {
+   sql.query("UPDATE item SET ? WHERE idItem = ?", [item, id], (err, res) => {
       if (err) {
          console.log("error: ", err);
          result(null, err);
