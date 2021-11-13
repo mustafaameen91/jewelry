@@ -70,6 +70,7 @@ const Item = function (item) {
    this.itemQuantity = item.itemQuantity;
    this.itemNameEn = item.itemNameEn;
    this.itemDescriptionEn = item.itemDescriptionEn;
+   this.special = item.special;
 };
 
 Item.create = (newItem, result) => {
@@ -83,6 +84,64 @@ Item.create = (newItem, result) => {
       console.log("created item: ", { id: res.insertId, ...newItem });
       result(null, { id: res.insertId, ...newItem });
    });
+};
+
+Item.findBySpecial = (show, mac, result) => {
+   sql.query(
+      `SELECT
+      item.idItem,
+      item.itemName,
+      subCategory.idSub,
+      item.itemDescription,
+      item.itemNameEn,
+      item.itemDescriptionEn,
+      DATE_FORMAT(item.itemDate, '%d/%m/%Y') AS itemDate,
+      item.itemQuality,
+      item.itemQuantity,
+      item.itemLike,
+      subCategory.subName,
+      category.categoryName,
+      category.categoryNameEn,
+      subCategory.subNameEn,
+      count(f.idFavorites) as favoritesCount
+      ${mac ? ", IFNULL(NOT NOT(fs.itemId), FALSE) AS isFavorite" : ""}
+   FROM
+      item
+      JOIN subCategory
+      JOIN itemCategory
+      JOIN category ON itemCategory.itemId = item.idItem
+         AND itemCategory.subId = subCategory.idSub
+         AND subCategory.categoryId = category.idCategory
+      ${
+         mac
+            ? "left JOIN favorites as fs ON item.idItem = fs.itemId AND fs.macAddress = '" +
+              mac +
+              "'"
+            : ""
+      } 
+    left join favorites as f on item.idItem = f.itemId group by item.idItem, subCategory.idSub
+    ${show} WHERE item.special = 1`,
+      (err, res) => {
+         if (err) {
+            result(null, err);
+         }
+         console.log("res:", res);
+         sql.query(`SELECT * FROM image `, (err, resOne) => {
+            let imageItem = res.map((item) => {
+               console.log("isFavorite:", item.isFavorite);
+               return arrangeData(item, resOne);
+            });
+            if (err) {
+               console.log("error: ", err);
+               result(null, err);
+               return;
+            }
+
+            // console.log("item: ", res);
+            result(null, imageItem);
+         });
+      }
+   );
 };
 
 Item.findById = (itemId, result) => {
@@ -150,7 +209,7 @@ Item.findBySubId = (subId, mac, result) => {
    );
 };
 
-Item.getAll = (show, mac, result) => {
+Item.getAll = (show, mac, special, result) => {
    sql.query(
       `SELECT
       item.idItem,
@@ -183,7 +242,7 @@ Item.getAll = (show, mac, result) => {
               "'"
             : ""
       } 
-    left join favorites as f on item.idItem = f.itemId group by item.idItem, subCategory.idSub
+    left join favorites as f on item.idItem = f.itemId ${special} group by item.idItem, subCategory.idSub
     ${show}`,
       (err, res) => {
          if (err) {
