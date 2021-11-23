@@ -23,7 +23,7 @@ exports.resize = (req, res, next) => {
       let imageName = `${generateRandomName(5, 3)}.${ext}`;
 
       sharp(req.files.file.data)
-         .resize({ height: 640, width: 513 })
+         .resize({ height: 500, width: 750 })
          .toFile(`./app/images/${imageName}`)
          .then(function (newFileInfo) {
             req.filePath = imageName;
