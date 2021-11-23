@@ -1,7 +1,8 @@
 module.exports = (app) => {
    const subCategory = require("../controllers/subCategory.controllers.js");
+   const resize = require("../middleware/saveSecondImage.middleware.js");
 
-   app.post("/api/addSubCategory", subCategory.create);
+   app.post("/api/addSubCategory", resize.resize, subCategory.create);
 
    app.get("/api/subCategories", subCategory.findAll);
 

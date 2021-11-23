@@ -16,7 +16,7 @@ function generateRandomName(length, studentId) {
 
 exports.resize = (req, res, next) => {
    if (req.files) {
-      var file = req.files.fileSub;
+      var file = req.files.file;
       var filename = file.name;
 
       var ext = filename.substr(filename.lastIndexOf(".") + 1);
@@ -24,10 +24,9 @@ exports.resize = (req, res, next) => {
 
       sharp(req.files.file.data)
          .resize({ height: 640, width: 513 })
-         .toBuffer()
+         .toFile(`./app/images/${imageName}`)
          .then(function (newFileInfo) {
-            fs.writeFileSync(imageName, newFileInfo);
-            req.filePathSecond = imageName;
+            req.filePath = imageName;
             next();
          })
          .catch(function (err) {
