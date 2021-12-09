@@ -60,7 +60,7 @@ exports.findAll = (req, res) => {
       } else if (req.query.show == "offer") {
          special = `WHERE item.special = 1`;
       } else if (req.query.show == "all") {
-         special = `ORDER BY item.idItem DESC LIMIT 10`;
+         query = `ORDER BY item.idItem DESC LIMIT 10`;
       }
    } else {
       query = "ORDER BY item.idItem DESC LIMIT 10";
