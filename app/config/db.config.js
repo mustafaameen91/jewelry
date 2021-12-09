@@ -5,5 +5,5 @@ module.exports = {
    // USER: "root",
    // PASSWORD: "root",
    DB: "Jewelry",
-   PORT: 3306,
+   PORT: 8889,
 };

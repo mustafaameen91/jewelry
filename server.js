@@ -5,6 +5,8 @@ const upload = require("express-fileupload");
 const fs = require("fs");
 const app = express();
 const notification = require("./app/notifications/notification");
+const { unlink } = require("fs");
+
 app.use(cors());
 app.use(express.json({ limit: "50mb" }));
 app.use(express.urlencoded({ limit: "50mb" }));
@@ -45,6 +47,21 @@ app.get("/images/:file", function (request, response) {
       }
       response.contentType(contentType);
       response.send(data);
+   });
+});
+
+app.post("/api/deleteImage", (req, res) => {
+   let imageName = req.body.categoryImage.split("/").pop();
+
+   unlink(`/app/images/${imageName}`, (err) => {
+      if (err) {
+         res.status(500).send({
+            message: "Error Deleting image : " + err,
+         });
+      } else {
+         res.send({ message: "delete image successfully" });
+         console.log(`successfully deleted ${imageName}`);
+      }
    });
 });
 

@@ -38,12 +38,6 @@ exports.create = (req, res) => {
                var message = {
                   app_id: "ef559c74-26d7-42cd-82ba-fed33f4cfe94",
                   headings: { en: `تم اضافة منتج جديد` },
-                  contents: {
-                     en: `${data.itemDescription}`,
-                  },
-                  subtitle: {
-                     en: `${data.itemName}`,
-                  },
                   included_segments: ["Subscribed Users"],
                };
 
@@ -67,7 +61,7 @@ exports.findAll = (req, res) => {
          special = `WHERE item.special = 1`;
       }
    } else {
-      query = "";
+      query = "ORDER BY item.idItem DESC LIMIT 10";
    }
 
    Item.getAll(query, req.query.macAddress, special, (err, data) => {

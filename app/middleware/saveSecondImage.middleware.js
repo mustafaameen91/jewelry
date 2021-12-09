@@ -20,10 +20,10 @@ exports.resize = (req, res, next) => {
       var filename = file.name;
 
       var ext = filename.substr(filename.lastIndexOf(".") + 1);
-      let imageName = `${generateRandomName(5, 3)}.${ext}`;
+      let imageName = `${generateRandomName(8, 5)}.${ext}`;
 
       sharp(req.files.file.data)
-         .resize({ height: 640, width: 513 })
+         .resize({ height: 720, width: 1080 })
          .toFile(`./app/images/${imageName}`)
          .then(function (newFileInfo) {
             req.filePath = imageName;

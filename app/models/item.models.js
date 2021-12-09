@@ -246,7 +246,7 @@ Item.getAll = (show, mac, special, result) => {
               "'"
             : ""
       } 
-    left join favorites as f on item.idItem = f.itemId ${special} group by item.idItem, subCategory.idSub
+    left join favorites as f on item.idItem = f.itemId ${special} group by item.idItem, subCategory.idSub 
     ${show}`,
       (err, res) => {
          if (err) {

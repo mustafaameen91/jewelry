@@ -11,6 +11,7 @@ exports.create = (req, res) => {
       categoryName: req.body.categoryName,
       categoryNameEn: req.body.categoryNameEn,
       categoryImage: "http://hayder-alkhafaje.com/images/" + req.filePath,
+      categoryCoverImage: "http://hayder-alkhafaje.com/images/" + req.filePath,
    });
 
    Category.create(category, (err, data) => {
