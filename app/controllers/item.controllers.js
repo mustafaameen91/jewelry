@@ -59,6 +59,8 @@ exports.findAll = (req, res) => {
          query = `ORDER BY item.itemLike DESC LIMIT 10`;
       } else if (req.query.show == "offer") {
          special = `WHERE item.special = 1`;
+      } else if (req.query.show == "all") {
+         special = `ORDER BY item.idItem DESC LIMIT 10`;
       }
    } else {
       query = "ORDER BY item.idItem DESC LIMIT 10";
