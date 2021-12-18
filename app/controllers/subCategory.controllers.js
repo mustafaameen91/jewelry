@@ -11,9 +11,10 @@ exports.create = (req, res) => {
       categoryId: req.body.categoryId,
       subName: req.body.subName,
       subImage: "http://hayder-alkhafaje.com/images/" + req.filePath,
-      subCoverImage: "http://hayder-alkhafaje.com/images/" + req.filePath,
+      subCoverImage: "http://hayder-alkhafaje.com/images/" + req.secondFilePath,
       subNameEn: req.body.subNameEn,
    });
+
    SubCategory.create(subCategory, (err, data) => {
       if (err)
          res.status(500).send({

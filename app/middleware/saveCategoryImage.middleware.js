@@ -16,7 +16,7 @@ function generateRandomName(length, studentId) {
 
 exports.resize = (req, res, next) => {
    if (req.files) {
-      var file = req.files.file;
+      var file = req.files.image;
       var filename = file.name;
 
       var ext = filename.substr(filename.lastIndexOf(".") + 1);
@@ -33,7 +33,8 @@ exports.resize = (req, res, next) => {
             .jpeg({ quality: 30 })
             .toFile(`./app/images/${imageName}`)
             .then(function (newFileInfo) {
-               req.filePath = imageName;
+               console.log(newFileInfo);
+               req.secondFilePath = imageName;
                next();
             })
             .catch(function (err) {

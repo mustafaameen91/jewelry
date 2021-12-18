@@ -9,6 +9,7 @@ exports.create = (req, res) => {
 
    const slider = new Slider({
       sliderImage: "http://hayder-alkhafaje.com/images/" + req.filePath,
+      // sliderImage: "http://localhost:3110/images/" + req.filePath,
    });
 
    Slider.create(slider, (err, data) => {
