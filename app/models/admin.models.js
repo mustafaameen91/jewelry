@@ -76,8 +76,13 @@ Admin.loginUser = (userName, password, result) => {
             result(null, err);
             return;
          }
-         console.log("admin: ", res[0]);
-         result(null, res[0]);
+         if (res.length == 0) {
+            result({ kind: "not_found" }, null);
+            return;
+         } else {
+            console.log("admin: ", res[0]);
+            result(null, res[0]);
+         }
       }
    );
 };
