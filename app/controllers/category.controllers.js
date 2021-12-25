@@ -74,7 +74,15 @@ exports.update = (req, res) => {
       });
    }
 
-   Category.updateById(req.params.id, new Category(req.body), (err, data) => {
+   let CategoryData = {
+      categoryName: req.body.categoryName,
+      categoryNameEn: req.body.categoryNameEn,
+      categoryImage: "http://hayder-alkhafaje.com/images/" + req.filePath,
+      categoryCoverImage:
+         "http://hayder-alkhafaje.com/images/" + req.secondFilePath,
+   };
+
+   Category.updateById(req.params.id, CategoryData, (err, data) => {
       if (err) {
          if (err.kind === "not_found") {
             res.status(404).send({

@@ -69,7 +69,7 @@ Category.getSpecialCategory = (result) => {
 
 Category.updateById = (id, category, result) => {
    sql.query(
-      "UPDATE category SET ? WHERE id = ?",
+      "UPDATE category SET ? WHERE idCategory = ?",
       [category, id],
       (err, res) => {
          if (err) {

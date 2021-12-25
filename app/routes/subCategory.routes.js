@@ -16,7 +16,12 @@ module.exports = (app) => {
 
    app.get("/api/subCategoryId/:categoryId", subCategory.findOneByCategoryId);
 
-   app.put("/api/subCategory/:id", subCategory.update);
+   app.put(
+      "/api/subCategory/:id",
+      resize.resize,
+      resizeImage.resize,
+      subCategory.update
+   );
 
    app.delete("/api/subCategory/:id", subCategory.delete);
 
