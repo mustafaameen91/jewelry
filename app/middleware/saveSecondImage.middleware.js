@@ -15,7 +15,7 @@ function generateRandomName(length, studentId) {
 }
 
 exports.resize = (req, res, next) => {
-   if (req.files) {
+   if (req.files.file) {
       var file = req.files.file;
       var filename = file.name;
 
