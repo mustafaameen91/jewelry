@@ -81,24 +81,27 @@ exports.update = (req, res) => {
       });
    }
 
-   SubCategory.updateById(
-      req.params.id,
-      new SubCategory(req.body),
-      (err, data) => {
-         if (err) {
-            if (err.kind === "not_found") {
-               res.status(404).send({
-                  message: `Not found subCategory with id ${req.params.id}.`,
-               });
-            } else {
-               res.status(500).send({
-                  message:
-                     "Error updating subCategory with id " + req.params.id,
-               });
-            }
-         } else res.send(data);
-      }
-   );
+   let subData = {
+      categoryId: req.body.categoryId,
+      subName: req.body.subName,
+      subImage: "http://hayder-alkhafaje.com/images/" + req.filePath,
+      subCoverImage: "http://hayder-alkhafaje.com/images/" + req.secondFilePath,
+      subNameEn: req.body.subNameEn,
+   };
+
+   SubCategory.updateById(req.params.id, subData, (err, data) => {
+      if (err) {
+         if (err.kind === "not_found") {
+            res.status(404).send({
+               message: `Not found subCategory with id ${req.params.id}.`,
+            });
+         } else {
+            res.status(500).send({
+               message: "Error updating subCategory with id " + req.params.id,
+            });
+         }
+      } else res.send(data);
+   });
 };
 
 exports.delete = (req, res) => {

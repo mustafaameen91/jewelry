@@ -84,7 +84,7 @@ SubCategory.getAll = (result) => {
 
 SubCategory.updateById = (id, subCategory, result) => {
    sql.query(
-      "UPDATE subCategory SET ? WHERE id = ?",
+      "UPDATE subCategory SET ? WHERE idSub = ?",
       [subCategory, id],
       (err, res) => {
          if (err) {
