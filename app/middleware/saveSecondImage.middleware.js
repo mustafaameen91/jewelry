@@ -27,10 +27,10 @@ exports.resize = (req, res, next) => {
       image.metadata().then(function (metadata) {
          return image
             .resize({
-               height: Math.round(metadata.height / 2),
-               width: Math.round(metadata.width / 2),
+               height: Math.round(metadata.height),
+               width: Math.round(metadata.width),
             })
-            .jpeg({ quality: 30 })
+            .jpeg({ quality: 70 })
             .toFile(`./app/images/${imageName}`)
             .then(function (newFileInfo) {
                req.filePath = imageName;
