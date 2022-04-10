@@ -95,7 +95,7 @@ app.use(
 app.use(staticFileMiddleware);
 
 exports.directory = __dirname;
-
+console.log("server is lost");
 app.listen(3110, () => {
    console.log("Server is running on port 3110.");
 });
